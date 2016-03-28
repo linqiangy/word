@@ -32,3 +32,19 @@ git checkout -- "file"
 
 11.将修改撤出暂存区
 git reset HEAD "file"
+
+12.克隆远程仓库
+git clone "url"
+
+13.推送本地仓库到远程仓库
+git push origin master
+
+14.创建分支
+git branch "new_branch"
+
+15.切换分支
+git checkout "branch_name"
+
+16.创建并切换分支
+git checkout -b "new_branch"
+
