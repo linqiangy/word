@@ -48,3 +48,9 @@ git checkout "branch_name"
 16.创建并切换分支
 git checkout -b "new_branch"
 
+17.删除分支
+git branch -d "branch_name"
+
+18.合并分支
+git merge "branch_name"
+
