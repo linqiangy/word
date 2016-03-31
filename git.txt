@@ -63,6 +63,10 @@ git stash pop
 21.查看远程仓库信息
 git remote
 
-22.
+22.切换远程其他分支
+git clone "地址"
+git branch -a
+git checkout -b "branch_name" origin/branch_name   两个分支名字需要一样(关联远程分支)
+
 
 
