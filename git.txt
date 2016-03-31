@@ -68,5 +68,10 @@ git clone "地址"
 git branch -a
 git checkout -b "branch_name" origin/branch_name   两个分支名字需要一样(关联远程分支)
 
+23.打标，相当于对历史版本进行快照
+git tag "v1.0"
+
+23.命令别名
+git config --global alias.st status
 
 
