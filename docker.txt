@@ -41,3 +41,15 @@ docker run -d -p 91:80 -p 92:443 --name 'nickname' dockername
 容器内查看ip
 ip ad li
 ip ro li
+
+给容器挂载一个目录
+docker run -d --name 'nickname' -h hostname -v /data nginx
+
+查看容器挂载目录，对应本地磁盘的卷
+docker inspect -f {{.Volumes}} dockername
+
+挂载本地目录到对应容器的目录
+docker run -d --name 'nickname' -h hostname -v /本地:/容器 dockername
+
+挂载已经存在的容器卷给新的容器（新的容器目录用的是挂载容器的目录）
+docker run -d --name 'nickname' -h hostname --volumes-from old-dockername dockername
