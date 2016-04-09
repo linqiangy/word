@@ -1,0 +1,22 @@
+docker search 'name'
+
+docker pull 'name'
+
+docker images
+
+docker ps -a
+
+docker run --name 'nickname' -it 'name' /bin/bash
+
+pid=docker inspect --format {{.State.Pid}} 'id'
+nsenter -t $pid -m -u -i -n -p
+
+brctl show
+
+docker run -P -d --name 'nickname' 'name'
+docker run -d -p 91:80 --name 'nickname' 'name'
+
+in docker:
+
+ip ad li
+ip ro li
