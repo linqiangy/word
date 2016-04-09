@@ -1,22 +1,43 @@
-docker search 'name'
+搜索docker容器
+docker search dockername
 
+下载docker容器
 docker pull 'name'
 
+列出本地所有容器镜像
 docker images
 
+列出所有容器进程
 docker ps -a
 
-docker run --name 'nickname' -it 'name' /bin/bash
+运行容器
+docker run dockername
 
+运行容器(取别名)
+docker run --name 'nickname' dockername
+
+后台运行容器
+docker run -d --name 'nickname' dockername
+
+运行并进入一个容器
+docker run --name 'nickname' -it dockername /bin/bash
+
+后台运行容器时,打印容器进程ID,通过进程ID进入容器
 pid=docker inspect --format {{.State.Pid}} 'id'
 nsenter -t $pid -m -u -i -n -p
 
+显示桥接
 brctl show
 
-docker run -P -d --name 'nickname' 'name'
-docker run -d -p 91:80 --name 'nickname' 'name'
+给容器端口随机映射一个本地端口
+docker run -P -d --name 'nickname' dockername
 
-in docker:
+给容器指定映射本地端口
+docker run -d -p 91:80 --name 'nickname' dockername
 
+给荣指定映射多个本地端口
+docker run -d -p 91:80 -p 92:443 --name 'nickname' dockername
+
+容器内查看ip
 ip ad li
 ip ro li
