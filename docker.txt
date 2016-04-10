@@ -53,3 +53,6 @@ docker run -d --name 'nickname' -h hostname -v /本地:/容器 dockername
 
 挂载已经存在的容器卷给新的容器（新的容器目录用的是挂载容器的目录）
 docker run -d --name 'nickname' -h hostname --volumes-from old-dockername dockername
+
+提交容器修改
+docker commit -m "content" "dockerId" dockername:tag
