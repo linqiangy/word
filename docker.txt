@@ -1,3 +1,12 @@
+如果安装docker找不到资源
+rpm -Uvh http://ftp.sjtu.edu.cn/fedora/epel/6/i386/epel-release-6-8.noarch.rp
+
+如果需要内核升级
+http://www.tuicool.com/articles/rUvERv
+
+报错：relocation error: /usr/bin/docker: symbol dm_task_get_info_with_deferred_remove, version Base not defined in file libdevmapper.so.1.02 with link time r
+yum upgrade device-mapper-libs
+
 搜索docker容器
 docker search dockername
 
