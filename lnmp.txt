@@ -1,0 +1,64 @@
+CentOS6.5安装lnmp命令
+
+首先更新yum163源
+wget http://mirrors.163.com/.help/CentOS6-Base-163.repo
+
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+
+mv CentOS6-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
+
+yum clean
+
+yum makecache
+
+安装nginx
+yum install -y nginx
+
+报错：
+error:No package nginx available.
+
+解决：
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+rpm -ivh epel-release-6-8.noarch.rpm
+
+再次安装nginx
+yum install -y nginx
+ 
+启动nginx
+service nginx start
+ 
+设置nginx开机启动
+chkconfig nginx on
+ 
+可能无法访问nginx，关闭iptables防火墙
+ 
+安装php5.5
+rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+ 
+yum install php55w  php55w-bcmath php55w-cli php55w-common  php55w-devel php55w-fpm    php55w-gd php55w-imap  php55w-ldap php55w-mbstring php55w-mcrypt php55w-mysql   php55w-odbc   php55w-pdo   php55w-pear  php55w-pecl-igbinary  php55w-xml php55w-xmlrpc php55w-opcache php55w-intl php55w-pecl-memcache
+ 
+ 启动php-fpm
+ service php-fpm start
+ 
+ 设置php-fpm开机启动
+ chkconfig php-fpm on
+ 
+ 安装mysql
+ yum install -y mysql mysql-server mysql-devel
+ 
+ 启动mysql
+ service mysqld start
+ 
+ 设置mysql开机启动
+ chkconfig mysqld on
+ 
+ 初始化root密码
+ mysqladmin -u root password 123456
+ 
+ 进入mysql
+ mysql -u root -p
+ 
+ 
+ 
+
