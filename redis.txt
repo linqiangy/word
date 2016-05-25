@@ -1,0 +1,42 @@
+1 Redis远程连接配置
+
+1.1修改配置文件
+
+bind 0.0.0.0
+
+
+2 Redis多实例配置
+
+2.1 安装Redis
+
+yum install redis
+
+2.2 复制Redis配置文件
+
+cp /etc/redis.conf /etc/redis-6380.conf
+
+2.3 修改参数：
+
+pidfile /var/run/redis/redis-6380.pid
+
+port 6380
+
+dir /var/lib/redis-6380/
+
+2.4 增加Redis服务
+
+cp /etc/init.d/redis /etc/init.d/redis-6380
+
+2.5 修改服务配置
+
+pidfile="/var/run/redis/redis-6380.pid"
+
+REDIS_CONFIG="/etc/redis-6380.conf"
+
+lockfile=/var/lock/subsys/redis-6380
+
+2.6 增加开机启动
+
+vim /etc/rc.local
+
+service redis-6380 start
