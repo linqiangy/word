@@ -1,0 +1,4 @@
+username Windows的共享文件的用户名
+password Windows的共享文件的密码
+//192.168.128.1/www  //192.168.128.1（共享IP）/www(共享文件名)
+mount -t cifs -o username="Administrator",password="18200129551" //192.168.128.1/www /home/www
