@@ -1,0 +1,153 @@
+hadoop1.2.1和hive0.13.1伪分布式安装
+
+下载jdk
+http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+
+下载hadoop
+http://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/
+
+下载hive
+http://www.apache.org/dyn/closer.cgi/hive/
+
+JDK安装
+
+1.解压jdk
+2.mv jdk /usr/local/
+3.配置环境变量 
+
+#环境变量
+export JAVA_HOME=/usr/local/jdk1.7.0_76
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+
+java -version
+
+Hadoop安装
+
+1.解压hadoop
+2.mv hadpoop /usr/local/
+3.修改hadoop-env.sh
+export JAVA_HOME=/usr/local/jdk1.7.0_76
+4.修改hadoop的核心配置文件core-site.xml，配置namenode的地址和端口
+<configuration>  
+     <property>  
+         <name>fs.default.name</name>  
+         <value>hdfs://localhost:9000</value>  
+     </property>  
+	 <property>  
+         <name>hadoop.tmp.dir</name>  
+         <value>/home/ruge/hadoop/hadooptmpdir</value>  
+         <description>A base for other temporary directories.</description>  
+     </property>  
+</configuration>
+5.修改hadoop的hdfs-site.xml，配置replication，即数据保存份数
+<property>  
+         <name>dfs.replication</name>  
+         <value>1</value>  
+</property>  
+6.修改hadoop的mapred-site.xml，配置jobtracker的地址和端口
+<property>  
+         <name>mapred.job.tracker</name>  
+         <value>localhost:9001</value>  
+</property>  
+
+Hive安装
+
+1.进入解压后的hive目录，进入conf
+cp hive-env.sh.template hive-env.sh
+cp hive-default.xml.template hive-site.xml
+cp hive-log4j.properties.template  hive-log4j.proprties
+
+2.vim hive-env.sh
+HADOOP_HOME=/usr/local/hadoop/
+export HIVE_CONF_DIR=/usr/local/hive/conf                                                                                    
+export HIVE_AUX_JARS_PATH=/usr/local/hive/lib
+
+3.创建目录
+mkdir -p /usr/hive/warehouse
+mkdir -p /usr/hive/tmp
+mkdir -p /usr/hive/log
+
+4.修改hive-site.xml
+<property>
+<name>hive.metastore.warehouse.dir</name>
+<value>/usr/hive/warehouse</value>
+</property>
+这个是设定数据目录
+-------------------------------------
+<property>
+<name>hive.exec.scratdir</name>
+<value>/usr/hive/tmp</value>
+</property>
+这个是设定临时文件目录
+--------------------------------------
+//这个在笔者的文件中没有可以自己添加
+<property>
+<name>hive.querylog.location</name>
+<value>/usr/hive/log</value>
+</property>
+这个是用于存放hive相关日志的目录
+其余的不用修改。
+
+5.vim hive-log4j.properties
+hive.log.dir=
+这个是当hive运行时，相应的日志文档存储到什么地方
+（mine：hive.log.dir=/usr/hive/log/${user.name}）
+hive.log.file=hive.log
+这个是hive日志文件的名字是什么
+默认的就可以，只要您能认出是日志就好，
+只有一个比较重要的需要修改一下，否则会报错。
+log4j.appender.EventCounter=org.apache.hadoop.log.metrics.EventCounter
+
+默认使用derby存储元数据，已经可以使用了。
+
+配置使用Mysql.
+
+6.配置hive-site.xml文件
+<property>
+<name>hive.metastore.warehouse.dir</name>
+<value>hdfs://node0:9000/usr/hive/warehouse</value>
+(这里就与前面的hdfs dfs -mkdir -p /usr/hive/warehouse相对应)
+</property>
+其中node0指的是笔者的NameNode的hostname；
+<property>
+<name>hive.exec.scratchdir</name>
+<value>hdfs://node0:9000/usr/hive/warehouse</value>
+</property>
+//这个没有变化与derby配置时相同
+<property>
+<name>hive.querylog.location</name>
+<value>/usr/hive/log</value>
+</property>
+-------------------------------------
+<property>
+<name>javax.jdo.option.ConnectionURL</name>
+<value>jdbc:mysql://localhost:3306/hive?createDatabaseIfNoExist=true</value>
+</property>
+javax.jdo.option.ConnectionURL
+这个参数使用来设置元数据连接字串
+-------------------------------------
+<property>
+<name>javax.jdo.option.ConnectionDriverName</name>
+<value>com.mysql.jdbc.Driver</value>
+</property>
+
+<property>
+<name>javax.jdo.option.ConnectorUserName</name>
+<value>hive</value>
+</property>
+这个javax.jdo.option.ConnectionUserName
+是用来设置hive存放的元数据的数据库(这里是mysql数据库)的用户名称的。
+
+<property>
+<name>javax.jdo.option.ConnectionPassword</name>
+<value>hive</value>
+</property>
+这个javax.jdo.option.ConnetionPassword是用来设置，
+用户登录数据库的时候需要输入的密码的。
+
+下载mysql的jdbc驱动到hive/lib
+
+启动hive的thrift
+hive --service hiveserver -p 10001
