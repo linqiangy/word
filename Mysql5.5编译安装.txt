@@ -74,3 +74,15 @@ mysqladmin -u root -pylq123 -S /data/3307/mysql.sock shutdown
 cd /usr/local/mysql/scripts
 ./mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3306/data --user=mysql
 ./mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3307/data --user=mysql
+
+多实例登录
+mysql -S /data/3306/mysql.sock
+mysql -S /data/3307/mysql.sock
+
+在MySQL控制台执行系统命令.
+system ls
+system mysql -S /data/3307/mysql.sock
+
+多实例修改密码.
+mysqladmin -S /data/3306/mysql.sock -u root password 'ylq123'
+mysqladmin -S /data/3307/mysql.sock -u root password 'ylq123'
