@@ -30,3 +30,22 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DWITH_READLINE=1 \
 -DWITH_EMBEDDED_SERVER=1 \
 -DWITH_DEBUG=0
+
+
+make && make install
+
+groupadd mysql
+
+useradd mysql -s /sbin/nologin -M -g
+
+chown -R mysql.mysql /usr/local/mysql/data
+
+chmod -R 1777 /tmp/
+
+cp /usr/local/mysql/my-small.cnf /etc/my.cnf
+
+cd /usr/local/mysql/scripts
+./mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --user=mysql
+
+cp /usr/local/mysql/mysql.server /etc/init.d/mysqld
+chmod +x /etc/init.d/mysqld
