@@ -55,3 +55,22 @@ grant all privileges on *.* to system@'localhost' identified by 'ylq123' with gr
 
 增加密码
 /usr/local/mysql/bin/mysqladmin -u root password ylq123
+
+
+Mysql多实例安装（参考：http://www.2cto.com/database/201411/355978.html）.
+mkdir -p /data/{3306,3307}/data
+cp /usr/local/mysql/my-small.cnf /data/3306/my.cn /data/3307/my.cnf
+然后修改配置文件，对应不同端口
+
+多实例启动.
+mysqld_safe --defaults-file=/data/3306/my.cnf 2>&1 > /dev/null &
+mysqld_safe --defaults-file=/data/3307/my.cnf 2>&1 > /dev/null &
+
+多实例关闭.
+mysqladmin -u root -pylq123 -S /data/3306/mysql.sock shutdown
+mysqladmin -u root -pylq123 -S /data/3307/mysql.sock shutdown
+
+多实例初始化.
+cd /usr/local/mysql/scripts
+./mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3306/data --user=mysql
+./mysql_install_db --basedir=/usr/local/mysql --datadir=/data/3307/data --user=mysql
