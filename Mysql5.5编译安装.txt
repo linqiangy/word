@@ -49,3 +49,9 @@ cd /usr/local/mysql/scripts
 
 cp /usr/local/mysql/mysql.server /etc/init.d/mysqld
 chmod +x /etc/init.d/mysqld
+
+授权管理员
+grant all privileges on *.* to system@'localhost' identified by 'ylq123' with grant option
+
+增加密码
+/usr/local/mysql/bin/mysqladmin -u root password ylq123
