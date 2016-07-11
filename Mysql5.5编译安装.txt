@@ -86,3 +86,6 @@ system mysql -S /data/3307/mysql.sock
 多实例修改密码.
 mysqladmin -S /data/3306/mysql.sock -u root password 'ylq123'
 mysqladmin -S /data/3307/mysql.sock -u root password 'ylq123'
+
+修改MySQL提示符
+mysql prompt
