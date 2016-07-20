@@ -158,3 +158,10 @@ http://blog.163.com/captain_zmc/blog/static/204012588201401734250298/
 
 hive函数大全：
 http://lxw1234.com/archives/2015/06/251.htm
+
+hive命令
+
+desc formatted tablename;命令查看表的详细信息
+
+建表：
+参考 http://lxw1234.com/archives/2015/06/265.htm
