@@ -155,3 +155,6 @@ hive --service hiveserver -p 10001
 参考链接：
 http://blog.fens.me/hadoop-hive-intro/
 http://blog.163.com/captain_zmc/blog/static/204012588201401734250298/
+
+hive函数大全：
+http://lxw1234.com/archives/2015/06/251.htm
